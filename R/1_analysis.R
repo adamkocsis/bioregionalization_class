@@ -8,7 +8,7 @@ library(igraph)
 library(chronosphere)
 
 # establish working directory
-workdir <- file.path(Sys.getenv("Teaching"), "2020-06-17_biogeo")
+workdir <- "/mnt/sky/Dropbox/Teaching/FAU/Macroecology/material/src/bioregionalization"
 setwd(workdir)
 
 ####################################################################################

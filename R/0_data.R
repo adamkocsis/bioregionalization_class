@@ -6,7 +6,7 @@ library(chronosphere)
 library(divDyn)
 
 # establish working directory
-workdir <- file.path(Sys.getenv("Teaching"), "2020-06-17_biogeo")
+workdir <- "/mnt/sky/Dropbox/Teaching/FAU/Macroecology/material/src/bioregionalization"
 setwd(workdir)
 
 
@@ -196,6 +196,7 @@ dat<-dat[!dat$environment%in%omitEnv, ]
 	# number of species level entries
 	sum(!is.na(datRec$trinomen))
 	
+	dir.create("export", showWarnings=FALSE)
 	# save data
 	saveRDS(datRec, file="export/pbdb_species_49.rds")
 

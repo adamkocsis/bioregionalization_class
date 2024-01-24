@@ -7,7 +7,7 @@
 #' @param alpha alpha values of region colors
 #' @param labels should the labels be plotted
 #' @param gri icosa grid used for plotting
-biogeoplot <- function(mem, cols=allHex, bg=land, alpha="99", labels=TRUE, gri=gr){
+biogeoplot <- function(mem, cols=allHex, bg=land$geometry, alpha="99", labels=TRUE, gri=gr){
 	# empty vector for the colors
 	member <- rep(NA, nrow(gri@faces))
 
