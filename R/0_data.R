@@ -4,6 +4,7 @@
 
 library(chronosphere)
 library(divDyn)
+library(rgplates)
 
 # establish working directory
 workdir <- "/mnt/sky/Dropbox/Teaching/FAU/Macroecology/material/src/bioregionalization"
@@ -154,7 +155,7 @@ dat<-dat[!dat$environment%in%omitEnv, ]
 
 
 ################################################################################
-# C. Species-level taxonomy
+# 3. Species-level taxonomy
 	
 	# genus level
 	datRec<-datRec[!is.na(datRec$genus),]
@@ -195,8 +196,29 @@ dat<-dat[!dat$environment%in%omitEnv, ]
 
 	# number of species level entries
 	sum(!is.na(datRec$trinomen))
-	
+
+################################################################################
+# D. Paleocoordinates
+data(stages)
+
+	# the appropriate stage-level reconstruction
+	datRec$map <- stages$mid[datRec$stg]
+
+	# calculate the paleocoordinates
+	colls <- unique(datRec[, c("collection_no","lng", "lat", "map")])
+
+	# omit missing
+	colls <- na.omit(colls)
+	paleoCoords <- reconstruct(colls[, c("lng", "lat")], age=colls$map, model="PALEOMAP", enumerate=FALSE)
+	colnames(paleoCoords) <- c("plng", "plat")
+
+	# merge back
+	colls <- cbind(colls, paleoCoords)
+	datRec <- merge(datRec, colls[, c("collection_no", "plng", "plat")], by="collection_no")
+
+# Export
 	dir.create("export", showWarnings=FALSE)
+
 	# save data
 	saveRDS(datRec, file="export/pbdb_species_49.rds")
 
